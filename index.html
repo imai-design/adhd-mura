@@ -187,6 +187,24 @@
     }
   }
 
+  .trail {
+    stroke-dasharray: 2000;
+    stroke-dashoffset: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .trail {
+      stroke-dashoffset: 2000;
+      animation: draw-trail 2.6s ease-out 0.4s forwards;
+    }
+  }
+
+  @keyframes draw-trail {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
   .map-label {
     font-family: 'Zen Maru Gothic', sans-serif;
     font-weight: 700;
@@ -336,6 +354,16 @@
     text-align: center;
     font-size: 0.9rem;
     color: var(--brown);
+  }
+
+  footer a {
+    color: var(--brown);
+    text-decoration-thickness: 1px;
+    text-underline-offset: 2px;
+  }
+
+  footer a:hover {
+    color: var(--green);
   }
 </style>
 </head>
@@ -530,7 +558,7 @@
 </main>
 
 <footer>
-  <p>ADHD村 — 村長・今井涼晴（RYOSEIWORLD）</p>
+  <p>ADHD村 — 村長・今井涼晴（<a href="https://ryoseiworld.co.jp/" target="_blank" rel="noopener">RYOSEIWORLD合同会社</a>）</p>
 </footer>
 
 </body>
