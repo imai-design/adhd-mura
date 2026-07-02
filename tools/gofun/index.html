@@ -1,0 +1,537 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>いますぐ5分 | ADHD村の道具</title>
+<meta name="description" content="動けない時、最初の5分だけAIと決める。ADHD村の道具 第1号。">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@700&family=Noto+Sans+JP:wght@400;500&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F4F7F2;
+    --green: #2F5D3A;
+    --ink: #24281F;
+    --brown: #8A6D4B;
+    --red: #C93A2B;
+    --paper: #FFFFFF;
+  }
+
+  * {
+    box-sizing: border-box;
+  }
+
+  html, body {
+    max-width: 100%;
+    overflow-x: hidden;
+  }
+
+  body {
+    margin: 0;
+    min-height: 100dvh;
+    background-color: var(--bg);
+    background-image: radial-gradient(circle at 1px 1px, rgba(36, 40, 31, 0.05) 1px, transparent 0);
+    background-size: 22px 22px;
+    color: var(--ink);
+    font-family: 'Noto Sans JP', -apple-system, BlinkMacSystemFont, sans-serif;
+    font-weight: 400;
+    line-height: 1.85;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  h1, h2 {
+    font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    color: var(--green);
+    margin: 0;
+    line-height: 1.4;
+  }
+
+  p {
+    margin: 0;
+  }
+
+  a {
+    color: var(--green);
+    text-decoration-thickness: 1.5px;
+    text-underline-offset: 3px;
+  }
+
+  a:hover {
+    color: var(--red);
+  }
+
+  :focus-visible {
+    outline: 3px solid var(--red);
+    outline-offset: 3px;
+    border-radius: 4px;
+  }
+
+  .skip-link {
+    position: absolute;
+    left: -9999px;
+    top: 0;
+    background: var(--green);
+    color: #fff;
+    padding: 0.8em 1.2em;
+    z-index: 100;
+    border-radius: 0 0 8px 0;
+  }
+
+  .skip-link:focus {
+    left: 0;
+  }
+
+  .wrap {
+    width: 100%;
+    max-width: 560px;
+    margin: 0 auto;
+    padding: 0 clamp(1.1rem, 5vw, 2rem);
+  }
+
+  /* ---------- Hero ---------- */
+
+  .hero {
+    padding-top: clamp(2.6rem, 8vw, 4rem);
+    padding-bottom: clamp(1.4rem, 4vw, 2rem);
+    text-align: center;
+  }
+
+  .hero h1 {
+    font-size: clamp(2.2rem, 9vw, 3rem);
+    letter-spacing: 0.02em;
+    text-shadow: 2px 3px 0 rgba(138, 109, 75, 0.16);
+  }
+
+  .hero .lead {
+    margin-top: 0.9rem;
+    font-size: clamp(1rem, 3vw, 1.15rem);
+    font-weight: 500;
+    color: var(--ink);
+  }
+
+  /* ---------- Form card ---------- */
+
+  .tool-card {
+    background: var(--paper);
+    border-radius: 22px 8px 22px 8px;
+    padding: clamp(1.3rem, 5vw, 2rem);
+    box-shadow: 4px 5px 0 rgba(138, 109, 75, 0.14);
+  }
+
+  .field-label {
+    display: block;
+    font-size: 0.92rem;
+    color: var(--brown);
+    margin-bottom: 0.6rem;
+  }
+
+  textarea#taskInput {
+    width: 100%;
+    min-height: 6rem;
+    padding: 0.9em 1em;
+    font: inherit;
+    font-size: 1rem;
+    color: var(--ink);
+    background: var(--bg);
+    border: 2px solid rgba(36, 40, 31, 0.12);
+    border-radius: 14px 6px 14px 6px;
+    resize: vertical;
+    line-height: 1.7;
+  }
+
+  textarea#taskInput:focus-visible {
+    border-color: var(--green);
+  }
+
+  textarea#taskInput::placeholder {
+    color: rgba(36, 40, 31, 0.42);
+  }
+
+  .btn {
+    display: block;
+    width: 100%;
+    margin-top: 1.2rem;
+    padding: 0.95em 1.4em;
+    background: var(--red);
+    color: #fff;
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1rem, 4vw, 1.1rem);
+    text-align: center;
+    text-decoration: none;
+    border: none;
+    border-radius: 999px;
+    box-shadow: 3px 4px 0 rgba(36, 40, 31, 0.18);
+    cursor: pointer;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  .btn:hover:not(:disabled) {
+    transform: translateY(-2px);
+  }
+
+  .btn:active:not(:disabled) {
+    transform: translateY(0);
+  }
+
+  .btn:disabled {
+    opacity: 0.55;
+    cursor: default;
+  }
+
+  .btn-secondary {
+    background: var(--green);
+    box-shadow: 3px 4px 0 rgba(36, 40, 31, 0.14);
+  }
+
+  /* ---------- Result ---------- */
+
+  .result {
+    margin-top: clamp(1.6rem, 5vw, 2.2rem);
+  }
+
+  .result[hidden] {
+    display: none;
+  }
+
+  .result-card {
+    background: var(--paper);
+    border-radius: 10px 26px 10px 26px;
+    padding: clamp(1.3rem, 5vw, 1.8rem);
+    box-shadow: 4px 5px 0 rgba(138, 109, 75, 0.14);
+  }
+
+  .result-eyebrow {
+    font-size: 0.85rem;
+    color: var(--brown);
+    margin-bottom: 0.5rem;
+  }
+
+  .result-step {
+    font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.15rem, 5vw, 1.4rem);
+    color: var(--ink);
+    line-height: 1.6;
+  }
+
+  /* ---------- Timer ---------- */
+
+  .timer {
+    margin-top: clamp(1.6rem, 5vw, 2.2rem);
+    text-align: center;
+  }
+
+  .timer[hidden] {
+    display: none;
+  }
+
+  .timer-card {
+    background: var(--paper);
+    border-radius: 26px 10px 26px 10px;
+    padding: clamp(1.6rem, 6vw, 2.4rem) clamp(1.2rem, 5vw, 2rem);
+    box-shadow: 4px 5px 0 rgba(138, 109, 75, 0.14);
+  }
+
+  .timer-face {
+    font-family: 'Zen Maru Gothic', sans-serif;
+    font-weight: 700;
+    font-size: clamp(3.6rem, 20vw, 5.5rem);
+    color: var(--green);
+    letter-spacing: 0.03em;
+    line-height: 1;
+    font-variant-numeric: tabular-nums;
+  }
+
+  .timer-underline {
+    display: block;
+    margin: 0.9rem auto 0;
+    width: clamp(120px, 40vw, 180px);
+    height: 14px;
+  }
+
+  .timer-trail {
+    stroke-dasharray: 240;
+    stroke-dashoffset: 0;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    .timer-trail.animate {
+      stroke-dashoffset: 240;
+      animation: draw-trail 0.9s ease-out forwards;
+    }
+  }
+
+  @keyframes draw-trail {
+    to {
+      stroke-dashoffset: 0;
+    }
+  }
+
+  .timer-note {
+    margin-top: 1.1rem;
+    font-size: 0.95rem;
+    color: var(--brown);
+  }
+
+  .timer-done-msg {
+    margin-top: 1.1rem;
+    font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+    font-weight: 700;
+    font-size: clamp(1.1rem, 5vw, 1.3rem);
+    color: var(--green);
+  }
+
+  .timer-done-msg[hidden] {
+    display: none;
+  }
+
+  /* ---------- Status / error ---------- */
+
+  .status-line {
+    margin-top: 0.8rem;
+    font-size: 0.9rem;
+    color: var(--brown);
+    min-height: 1.3em;
+  }
+
+  /* ---------- Footer ---------- */
+
+  footer {
+    padding: clamp(2.4rem, 7vw, 3.5rem) 0 clamp(2rem, 6vw, 3rem);
+    text-align: center;
+    font-size: 0.88rem;
+    color: var(--brown);
+  }
+
+  footer .back-link {
+    display: inline-block;
+    margin-top: 0.4rem;
+    font-weight: 500;
+    border-bottom: 1.5px solid var(--brown);
+  }
+</style>
+</head>
+<body>
+
+<a class="skip-link" href="#main">本文へスキップ</a>
+
+<main id="main">
+
+  <section class="hero wrap">
+    <h1>いますぐ5分</h1>
+    <p class="lead">動けない時、最初の5分だけAIと決める。</p>
+  </section>
+
+  <section class="wrap">
+    <div class="tool-card">
+      <label class="field-label" for="taskInput">やらなきゃいけないこと、そのまま書いて</label>
+      <textarea id="taskInput" placeholder="例：部屋の片付け／役所の書類／返信たまってる" maxlength="300"></textarea>
+      <button type="button" class="btn" id="getStepBtn">最初の5分をもらう</button>
+      <p class="status-line" id="statusLine" role="status" aria-live="polite"></p>
+    </div>
+
+    <div class="result" id="resultSection" hidden>
+      <div class="result-card">
+        <p class="result-eyebrow">最初の5分でやること</p>
+        <p class="result-step" id="resultStep"></p>
+        <button type="button" class="btn btn-secondary" id="startTimerBtn">5分はじめる</button>
+      </div>
+    </div>
+
+    <div class="timer" id="timerSection" hidden>
+      <div class="timer-card">
+        <div class="timer-face" id="timerFace">5:00</div>
+        <svg class="timer-underline" viewBox="0 0 180 14" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+          <defs>
+            <filter id="rough" x="-30%" y="-30%" width="160%" height="160%">
+              <feTurbulence type="fractalNoise" baseFrequency="0.06" numOctaves="2" seed="4" result="noise"></feTurbulence>
+              <feDisplacementMap in="SourceGraphic" in2="noise" scale="4"></feDisplacementMap>
+            </filter>
+          </defs>
+          <path class="timer-trail" id="timerTrail" filter="url(#rough)" d="M 8 7 C 40 2, 80 12, 120 6 C 145 2, 160 8, 172 6" fill="none" stroke="#8A6D4B" stroke-width="3" stroke-linecap="round"></path>
+        </svg>
+        <p class="timer-note" id="timerNote">タイマーを動かしています。今はこれだけでいい。</p>
+        <p class="timer-done-msg" id="timerDoneMsg" hidden>5分えらい。続けても、やめてもいい。</p>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <p>ADHD村の道具 第1号</p>
+  <a class="back-link" href="https://imai-design.github.io/adhd-mura/">村に持ち帰る → LP</a>
+</footer>
+
+<script>
+(function () {
+  'use strict';
+
+  var GOFUN_ENDPOINT = 'https://glm-gw.ryoseiworld.workers.dev/gofun';
+  var FETCH_TIMEOUT_MS = 15000;
+  var TIMER_SECONDS = 5 * 60;
+
+  var taskInput = document.getElementById('taskInput');
+  var getStepBtn = document.getElementById('getStepBtn');
+  var statusLine = document.getElementById('statusLine');
+  var resultSection = document.getElementById('resultSection');
+  var resultStep = document.getElementById('resultStep');
+  var startTimerBtn = document.getElementById('startTimerBtn');
+  var timerSection = document.getElementById('timerSection');
+  var timerFace = document.getElementById('timerFace');
+  var timerTrail = document.getElementById('timerTrail');
+  var timerNote = document.getElementById('timerNote');
+  var timerDoneMsg = document.getElementById('timerDoneMsg');
+
+  // ---------- フォールバック: AIが使えない時も必ず何か返す ----------
+  var FALLBACK_STEPS = {
+    片付け: 'ゴミ袋を1枚持って、目に入った明らかなゴミだけ3つ拾う。5分で終わらなくてOK。',
+    書類: 'その書類を1枚だけ机の上に出して置く。中身は読まなくていい。',
+    返信: '一番古い未読を1件だけ開く。返信は書かなくていい、開くだけでOK。',
+    勉強: '教科書かノートを1冊、机の上に開いて置く。読まなくていい、開くだけでOK。',
+    運動: '靴を履いて玄関の外に1歩だけ出る。それだけで今日は十分。',
+    その他: 'タイマーを5分にセットして、目の前にあるものを1つだけ手に取る。'
+  };
+
+  var FALLBACK_KEYWORDS = [
+    { category: '片付け', words: ['片付け', '掃除', '部屋', 'ゴミ', '散らか', '整理'] },
+    { category: '書類', words: ['書類', '役所', '申請', '手続き', '提出', '税金', '確定申告', '契約', '書き'] },
+    { category: '返信', words: ['返信', 'メール', 'LINE', 'ライン', '連絡', 'DM', 'メッセージ', '電話'] },
+    { category: '勉強', words: ['勉強', '宿題', 'レポート', '試験', 'テスト', '資格', '課題'] },
+    { category: '運動', words: ['運動', '筋トレ', 'ジム', '散歩', 'ランニング', 'ヨガ', 'ストレッチ'] }
+  ];
+
+  function pickFallbackStep(task) {
+    for (var i = 0; i < FALLBACK_KEYWORDS.length; i++) {
+      var entry = FALLBACK_KEYWORDS[i];
+      for (var j = 0; j < entry.words.length; j++) {
+        if (task.indexOf(entry.words[j]) !== -1) {
+          return FALLBACK_STEPS[entry.category];
+        }
+      }
+    }
+    return FALLBACK_STEPS['その他'];
+  }
+
+  // ---------- AI呼び出し ----------
+  function fetchAiStep(task) {
+    var controller = new AbortController();
+    var timeoutId = setTimeout(function () { controller.abort(); }, FETCH_TIMEOUT_MS);
+
+    return fetch(GOFUN_ENDPOINT, {
+      method: 'POST',
+      headers: { 'content-type': 'application/json' },
+      body: JSON.stringify({ task: task }),
+      signal: controller.signal
+    }).then(function (res) {
+      clearTimeout(timeoutId);
+      if (!res.ok) return null;
+      return res.json().then(function (data) {
+        if (!data || data.ok !== true || typeof data.step !== 'string' || !data.step.trim()) {
+          return null;
+        }
+        return data.step.trim();
+      });
+    }).catch(function () {
+      clearTimeout(timeoutId);
+      return null;
+    });
+  }
+
+  function setLoading(isLoading) {
+    getStepBtn.disabled = isLoading;
+    statusLine.textContent = isLoading ? '考えています…' : '';
+  }
+
+  function showResult(step, source) {
+    resultStep.textContent = step;
+    resultSection.hidden = false;
+    statusLine.textContent = source === 'fallback' ? '（今回はテンプレートから提案しています）' : '';
+    resultSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  function handleGetStep() {
+    var task = taskInput.value.trim();
+    if (!task) {
+      taskInput.focus();
+      statusLine.textContent = 'まず何か1つ書いてみて。';
+      return;
+    }
+
+    resetTimer();
+    timerSection.hidden = true;
+    setLoading(true);
+
+    fetchAiStep(task).then(function (aiStep) {
+      setLoading(false);
+      if (aiStep) {
+        showResult(aiStep, 'ai');
+      } else {
+        showResult(pickFallbackStep(task), 'fallback');
+      }
+    });
+  }
+
+  // ---------- タイマー ----------
+  var timerIntervalId = null;
+  var remainingSeconds = TIMER_SECONDS;
+
+  function formatTime(totalSeconds) {
+    var m = Math.floor(totalSeconds / 60);
+    var s = totalSeconds % 60;
+    return m + ':' + (s < 10 ? '0' + s : String(s));
+  }
+
+  function resetTimer() {
+    if (timerIntervalId) {
+      clearInterval(timerIntervalId);
+      timerIntervalId = null;
+    }
+    remainingSeconds = TIMER_SECONDS;
+    timerFace.textContent = formatTime(remainingSeconds);
+    timerNote.hidden = false;
+    timerDoneMsg.hidden = true;
+  }
+
+  function tick() {
+    remainingSeconds -= 1;
+    if (remainingSeconds <= 0) {
+      remainingSeconds = 0;
+      timerFace.textContent = formatTime(remainingSeconds);
+      clearInterval(timerIntervalId);
+      timerIntervalId = null;
+      timerNote.hidden = true;
+      timerDoneMsg.hidden = false;
+      return;
+    }
+    timerFace.textContent = formatTime(remainingSeconds);
+  }
+
+  function startTimer() {
+    resetTimer();
+    timerSection.hidden = false;
+    timerTrail.classList.remove('animate');
+    // reflow を挟んでアニメーションを再トリガー
+    void timerTrail.getBoundingClientRect();
+    timerTrail.classList.add('animate');
+    timerIntervalId = setInterval(tick, 1000);
+    timerSection.scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  getStepBtn.addEventListener('click', handleGetStep);
+  startTimerBtn.addEventListener('click', startTimer);
+  taskInput.addEventListener('keydown', function (e) {
+    if (e.key === 'Enter' && (e.metaKey || e.ctrlKey)) {
+      e.preventDefault();
+      handleGetStep();
+    }
+  });
+})();
+</script>
+
+</body>
+</html>
